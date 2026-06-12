@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SenticMental // NLP Depression & Anxiety Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #2d1e18;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(-45deg, #f7d6c8, #fbc2eb, #eddcd2, #c2e9fb, #e8c5af, #f5ebe0);
+            background-size: 400% 400%;
+            animation: auroraFlow 15s ease infinite;
+        }
+
+        @keyframes auroraFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.45);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(139, 92, 26, 0.15);
+            border-radius: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .glassmorphism:hover {
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 50px -12px rgba(92, 60, 42, 0.25);
+        }
+
+        .organic-btn {
+            background: linear-gradient(135deg, #4a3525 0%, #6f4e37 50%, #bc8a5f 100%);
+            background-size: 200% auto;
+            box-shadow: 0 8px 25px rgba(74, 53, 37, 0.4);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            animation: gradientBtn 4s linear infinite;
+        }
+
+        @keyframes gradientBtn {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .organic-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: linear-gradient(135deg, #2d1e18 0%, #4a3525 100%);
+            box-shadow: 0 12px 30px rgba(188, 138, 95, 0.6), 0 0 15px rgba(255, 0, 127, 0.2);
+        }
+
+        textarea#tweetInput {
+            background: rgba(255, 255, 255, 0.6) !important;
+            border: 2px solid rgba(188, 138, 95, 0.2) !important;
+            color: #4a3525 !important;
+        }
+
+        textarea#tweetInput:focus {
+            border-color: #ff007f !important;
+            background: rgba(255, 255, 255, 0.85) !important;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.15) !important;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            25% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+
+            40% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+                filter: drop-shadow(0 0 10px #ff007f);
+            }
+        }
+
+        @keyframes socialCycle {
+
+            0%,
+            28% {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+            }
+
+            33%,
+            95% {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-20px) scale(0.7);
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(20px) scale(0.7);
+            }
+        }
+
+        .icon-tw {
+            animation: socialCycle 6s infinite 0s ease-in-out;
+        }
+
+        .icon-ig {
+            animation: socialCycle 6s infinite 2s ease-in-out;
+        }
+
+        .icon-fb {
+            animation: socialCycle 6s infinite 4s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <header
+        class="glassmorphism sticky top-0 z-50 px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/40 m-2">
+        <div class="flex items-center gap-3.5">
+            <div class="relative flex-shrink-0 group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-tr from-[#ff007f] via-[#bc8a5f] to-[#00dfd8] rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-500 animate-pulse">
+                </div>
+                <div
+                    class="relative w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center border border-white/20 shadow-inner overflow-hidden">
+                    <div
+                        class="absolute inset-0 opacity-20 bg-[radial-gradient(#bc8a5f_1px,transparent_1px)] bg-[size:8px_8px]">
+                    </div>
+                    <i
+                        class="fa-solid fa-brain text-white/90 text-xl absolute transition-transform duration-500 group-hover:scale-90"></i>
+                    <div class="absolute inset-0 flex items-center justify-center mix-blend-screen">
+                        <i
+                            class="fa-solid fa-heart-pulse text-[#ff007f] text-xs animate-[heartBeat_1.2s_infinite] drop-shadow-[0_0_6px_#ff007f]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-2 group select-none">
+                <h1 class="text-3xl sm:text-4xl font-black tracking-tight flex items-center flex-wrap">
+                    <span
+                        class="bg-gradient-to-r from-[#ff007f] to-[#bc8a5f] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(255,0,127,0.15)] transition-all duration-500 normal-case pr-2 pt-1"
+                        style="font-family: 'Alex Brush', cursive; font-weight: 400; font-size: 1.3em;">
+                        Sentic
+                    </span>
+                    <span
+                        class="bg-gradient-to-r from-[#bc8a5f] to-[#00dfd8] bg-clip-text text-transparent tracking-tight font-black uppercase inline-block">
+                        Mental
+                    </span>
+                </h1>
+            </div>
+        </div>
+
+        <div
+            class="flex items-center w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-300/30">
+            <span
+                class="flex items-center gap-2 text-xs bg-white/80 border border-[#bc8a5f]/30 text-[#6f4e37] px-4 py-2 rounded-full font-black shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-[#bc8a5f] animate-ping"></span> MIND ENGINE: ACTIVE
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 flex-grow">
+
+        <div class="lg:col-span-1 flex flex-col gap-6">
+            <div class="glassmorphism p-6 sm:p-8 rounded-3xl flex flex-col gap-5">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-black tracking-wider text-[#4a3525] uppercase">Analyze Live Stream</h2>
+
+                    <div class="relative w-8 h-8 flex items-center justify-center overflow-hidden bg-white/60 rounded-xl border border-[#bc8a5f]/30 shadow-xs"
+                        style="min-width: 32px; min-height: 32px;">
+                        <i class="fa-brands fa-twitter text-lg text-sky-400 absolute icon-tw"></i>
+                        <i class="fa-brands fa-instagram text-lg text-pink-500 absolute icon-ig"
+                            style="opacity: 0; visibility: hidden;"></i>
+                        <i class="fa-brands fa-facebook text-lg text-blue-600 absolute icon-fb"
+                            style="opacity: 0; visibility: hidden;"></i>
+                    </div>
+                </div>
+                <p class="text-xs text-[#6f4e37]/80 font-semibold leading-relaxed -mt-2">Paste raw social data here to
+                    analyze depression, anxiety, or neutral sentiment marks via empathetic NLP metrics.</p>
+
+                <div class="relative mt-1">
+                    <textarea id="tweetInput" rows="6"
+                        class="w-full rounded-2xl p-4 text-sm focus:outline-none resize-none transition-all shadow-inner"
+                        placeholder="Type or paste social media post content here..."></textarea>
+                    <span class="absolute bottom-4 right-4 text-xs font-mono text-[#bc8a5f] font-bold" id="charCount">0
+                        / 280</span>
+                </div>
+
+                <button id="analyzeBtn" onclick="submitTweet()"
+                    class="organic-btn w-full text-white font-extrabold text-xs py-4 px-5 rounded-2xl flex items-center justify-center gap-2.5 cursor-pointer">
+                    <i class="fa-solid fa-brain-pulse text-sm opacity-90"></i> Run Analysis
+                </button>
+            </div>
+
+            <div
+                class="glassmorphism p-6 rounded-3xl relative overflow-hidden min-h-[180px] flex flex-col items-center justify-center border-b-4 border-[#bc8a5f] shadow-lg group">
+                <div
+                    class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#bc8a5f_1px,transparent_1px),linear-gradient(to_bottom,#bc8a5f_1px,transparent_1px)] bg-[size:14px_24px]">
+                </div>
+
+                <div class="w-full flex items-center justify-between relative z-10 px-2 sm:px-6">
+                    <div class="flex flex-col items-end justify-center w-1/3 relative h-24 overflow-hidden">
+                        <span
+                            class="text-[10px] font-black tracking-widest text-rose-600/60 uppercase absolute animate-[floatText_3s_infinite_0s]">Depressed</span>
+                        <span
+                            class="text-[11px] font-black tracking-wider text-orange-600/50 uppercase absolute animate-[floatText_2.5s_infinite_0.8s]">Anxiety</span>
+                        <span
+                            class="text-[9px] font-black tracking-widest text-red-600/60 uppercase absolute animate-[floatText_3.5s_infinite_1.5s]">Negative
+                            Info</span>
+                    </div>
+
+                    <div class="relative flex items-center justify-center w-1/3">
+                        <div class="absolute w-20 h-20 bg-[#bc8a5f]/20 rounded-full animate-ping opacity-60"></div>
+                        <div class="absolute w-16 h-16 bg-[#ff007f]/20 rounded-full animate-pulse opacity-40"></div>
+                        <div
+                            class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#ff007f] via-[#bc8a5f] to-[#00dfd8] flex items-center justify-center shadow-lg shadow-[#bc8a5f]/50 relative z-10 transition-transform duration-500 group-hover:scale-110">
+                            <i
+                                class="fa-solid fa-brain text-white text-xl sm:text-2xl animate-[pulse_1.5s_infinite]"></i>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-start justify-center w-1/3 relative h-24 overflow-hidden">
+                        <span
+                            class="text-[10px] font-black tracking-widest text-emerald-600/70 uppercase absolute animate-[floatTextRight_3s_infinite_0.2s]">Un-Depressed</span>
+                        <span
+                            class="text-[11px] font-black tracking-wider text-teal-600/60 uppercase absolute animate-[floatTextRight_2.8s_infinite_1s]">Stable
+                            Mind</span>
+                        <span
+                            class="text-[9px] font-black tracking-widest text-cyan-600/60 uppercase absolute animate-[floatTextRight_3.2s_infinite_1.8s]">Positive
+                            Info</span>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-4 text-[9px] font-black tracking-widest text-[#4a3525] uppercase bg-white/60 px-3 py-1 rounded-full border border-white/50 shadow-2xs">
+                    NLP Real-Time Classification Matrix
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <div id="placeholderState"
+                class="glassmorphism rounded-3xl p-8 sm:p-16 text-center flex flex-col items-center justify-center gap-5 flex-grow min-h-[350px] border-dashed border-2 border-[#bc8a5f]/40 bg-white/20">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#bc8a5f] to-[#ff007f] flex items-center justify-center shadow-md animate-bounce"
+                    style="animation-duration: 4s;">
+                    <i class="fa-solid fa-feather-pointed text-xl text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-[#4a3525] tracking-tight uppercase">Awaiting Emotional Stream
+                    </h3>
+                    <p class="text-xs font-semibold text-[#6f4e37]/80 max-w-sm mx-auto mt-2 leading-relaxed">Input a
+                        sample tweet in the analysis workspace panel to trigger real-time AI/NLP models assessment
+                        graphs.</p>
+                </div>
+            </div>
+
+            <div id="loadingState"
+                class="hidden glassmorphism rounded-3xl p-12 text-center flex flex-col items-center justify-center gap-4 flex-grow min-h-[350px]">
+                <div class="animate-spin rounded-full h-10 w-10 border-4 border-[#ff007f] border-t-transparent"></div>
+                <p class="text-xs text-[#bc8a5f] tracking-widest font-black uppercase">Processing NLP Feature Matrix...
+                </p>
+            </div>
+
+            <div id="resultsState" class="hidden flex flex-col gap-6 flex-grow">
+
+                <div
+                    class="glassmorphism p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-6 items-center border-l-4 border-[#ff007f]">
+                    <div>
+                        <span class="text-[10px] font-black text-[#bc8a5f] uppercase tracking-widest">Classification
+                            Output</span>
+                        <h2 id="predictionResult"
+                            class="text-3xl font-black tracking-tight mt-0.5 text-[#4a3525] uppercase">Depression
+                            Detected</h2>
+                        <p class="text-xs font-bold text-[#6f4e37]/70 mt-1">Confidence Accuracy: <span
+                                id="confidenceScore" class="font-black text-[#2d1e18]">92%</span></p>
+                        <p class="text-xs font-semibold text-[#6f4e37]/60 mt-0.5">Input: <span id="inputText"
+                                class="font-mono text-[#4a3525]"></span></p>
+                    </div>
+                    <div class="flex justify-start md:justify-end">
+                        <div id="statusBadge"
+                            class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider shadow-md border-2 flex items-center gap-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassmorphism p-6 sm:p-8 rounded-3xl flex flex-col gap-6">
+                    <h3 class="text-xs font-black tracking-wider text-[#4a3525] uppercase">Probability Vector Breakdown
+                    </h3>
+
+                    <div class="flex flex-col gap-5">
+                        <div>
+                            <div class="flex justify-between text-xs font-black mb-1.5 uppercase tracking-wide">
+                                <span class="text-[#6f4e37]">Depression Spectrum</span>
+                                <span id="depLabel" class="text-rose-600 font-black font-mono">0%</span>
+                            </div>
+                            <div
+                                class="w-full bg-white/50 h-4 rounded-full overflow-hidden shadow-inner border border-white/60 p-0.5">
+                                <div id="depBar"
+                                    class="bg-gradient-to-r from-[#bc8a5f] via-orange-500 to-rose-600 h-full rounded-full transition-all duration-1000"
+                                    style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-black mb-1.5 uppercase tracking-wide">
+                                <span class="text-[#6f4e37]">Anxiety Spectrum</span>
+                                <span id="anxLabel" class="text-amber-700 font-black font-mono">0%</span>
+                            </div>
+                            <div
+                                class="w-full bg-white/50 h-4 rounded-full overflow-hidden shadow-inner border border-white/60 p-0.5">
+                                <div id="anxBar"
+                                    class="bg-gradient-to-r from-[#e9c46a] to-[#bc8a5f] h-full rounded-full transition-all duration-1000"
+                                    style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-black mb-1.5 uppercase tracking-wide">
+                                <span class="text-[#6f4e37]">Stable / Calm Profile</span>
+                                <span id="neuLabel" class="text-teal-700 font-black font-mono">0%</span>
+                            </div>
+                            <div
+                                class="w-full bg-white/50 h-4 rounded-full overflow-hidden shadow-inner border border-white/60 p-0.5">
+                                <div id="neuBar"
+                                    class="bg-gradient-to-r from-[#98bda7] to-[#00dfd8] h-full rounded-full transition-all duration-1000"
+                                    style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer
+        class="text-center py-5 text-[10px] font-black tracking-widest text-[#bc8a5f] border-t border-white/30 bg-white/30">
+        &copy; 2026 SENTICMENTAL LABS // CORE SYSTEM NEURAL FRAMEWORK
+    </footer>
+
+    <script>
+        const tx = document.getElementById('tweetInput');
+        tx.addEventListener('input', function () {
+            document.getElementById('charCount').innerText = `${this.value.length} / 280`;
+        });
+
+        // Map probability indices to labels (based on your label_encoder)
+        // Assuming order: [Depression, Anxiety, Neutral]
+        const LABEL_MAP = ['Depression', 'Anxiety', 'Neutral'];
+
+        function submitTweet() {
+            const tweetText = tx.value.trim();
+            if (!tweetText) {
+                alert("Please write down or paste a valid tweet first.");
+                return;
+            }
+
+            const placeholder = document.getElementById('placeholderState');
+            const loading = document.getElementById('loadingState');
+            const results = document.getElementById('resultsState');
+
+            placeholder.classList.add('hidden');
+            results.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            // FIX: Send 'text' field (not 'tweet') to match API TextInput model
+            fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: tweetText })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    loading.classList.add('hidden');
+
+                    // FIX: API always returns success, check if data has expected fields
+                    if (data.prediction && data.probabilities) {
+                        results.classList.remove('hidden');
+
+                        // Set prediction and confidence
+                        document.getElementById('predictionResult').innerText = data.prediction;
+                        document.getElementById('confidenceScore').innerText = (data.confidence * 100).toFixed(1) + '%';
+                        document.getElementById('inputText').innerText = data.text;
+
+                        // FIX: Map probabilities array to labels (index 0=Depression, 1=Anxiety, 2=Neutral)
+                        const probabilities = data.probabilities;
+
+                        // Assuming LABEL_MAP order matches your label_encoder
+                        const depProb = probabilities[0] * 100;
+                        const anxProb = probabilities[1] * 100;
+                        const neuProb = probabilities[2] * 100;
+
+                        document.getElementById('depLabel').innerText = depProb.toFixed(1) + '%';
+                        document.getElementById('depBar').style.width = depProb + '%';
+
+                        document.getElementById('anxLabel').innerText = anxProb.toFixed(1) + '%';
+                        document.getElementById('anxBar').style.width = anxProb + '%';
+
+                        document.getElementById('neuLabel').innerText = neuProb.toFixed(1) + '%';
+                        document.getElementById('neuBar').style.width = neuProb + '%';
+
+                        // Set status badge
+                        const badge = document.getElementById('statusBadge');
+                        const predictionLower = data.prediction.toLowerCase();
+
+                        if (predictionLower.includes('depression')) {
+                            badge.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider bg-rose-500 text-white border-rose-600 shadow-md flex items-center gap-2";
+                            badge.innerHTML = `<i class="fa-solid fa-cloud-sun-rain text-sm animate-bounce"></i> Attention Required`;
+                        } else if (predictionLower.includes('anxiety')) {
+                            badge.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider bg-amber-500 text-slate-900 border-amber-600 shadow-md flex items-center gap-2";
+                            badge.innerHTML = `<i class="fa-solid fa-wind text-sm"></i> Anxiety Detected`;
+                        } else {
+                            badge.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider bg-emerald-500 text-white border-emerald-600 shadow-md flex items-center gap-2";
+                            badge.innerHTML = `<i class="fa-solid fa-feather text-sm"></i> Balanced Mind`;
+                        }
+
+                    } else {
+                        placeholder.classList.remove('hidden');
+                        alert("System Matrix Exception: Invalid response from API");
+                        console.error('API response:', data);
+                    }
+                })
+                .catch(err => {
+                    loading.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                    console.error(err);
+                    alert("Core server network bridge unreachable. Make sure the FastAPI server is running.");
+                });
+        }
+    </script>
+</body>
+
+</html>
