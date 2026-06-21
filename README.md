@@ -1,10 +1,33 @@
 # Depression and Anxiety Detection from Social Media Text using NLP and Machine Learning
 
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange)
+![NLP](https://img.shields.io/badge/NLP-TF--IDF-red)
+
 ## Overview
 
 This project focuses on detecting depression and anxiety-related content from Twitter data using Natural Language Processing (NLP) and Machine Learning techniques. The system analyzes tweet text, extracts meaningful features, and classifies tweets into mental health-related categories.
 
 The project demonstrates a complete NLP pipeline including data preprocessing, feature extraction, machine learning model training, evaluation, and prediction.
+
+This project demonstrates the application of Natural Language Processing (NLP), feature engineering, ensemble learning, and REST API deployment for social media text classification.
+
+---
+
+## Project Preview
+
+### System Architecture
+
+![Architecture](screenshots/architecture.png)
+
+### API Documentation
+
+![Swagger UI](screenshots/swagger-ui.png)
+
+### Prediction Example
+
+![Prediction Output](screenshots/api-output.png)
 
 ---
 
@@ -32,31 +55,6 @@ The project demonstrates a complete NLP pipeline including data preprocessing, f
 6. Ensemble Learning
 7. Model Evaluation
 8. Prediction and API Deployment
-
----
-
-## System Architecture
-
-Tweet Input
-↓
-Preprocessing
-↓
-TF-IDF Vectorization
-↓
-
-* Logistic Regression
-* Linear SVM
-* Random Forest
-
-↓
-
-Soft Voting Ensemble
-↓
-Ensemble Prediction Module
-↓
-FastAPI Service
-↓
-Prediction Output (Label + Confidence Score)
 
 ---
 
@@ -128,13 +126,29 @@ The models were evaluated using:
 
 ---
 
+## Repository Structure
+
+```text
+Depression-Anxiety-Detection-NLP
+│
+├── data/
+├── models/
+├── notebooks/
+├── screenshots/
+├── app.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+---
+
 ## Installation
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/depression-anxiety-detection-nlp.git
-cd depression-anxiety-detection-nlp
+git clone https://github.com/JavedAkhtar0/Depression-Anxiety-Detection-NLP.git
+cd Depression-Anxiety-Detection-NLP
 ```
 
 Install dependencies:
@@ -161,11 +175,11 @@ to access the Swagger API documentation.
 
 ## Results
 
-The proposed system was evaluated using multiple machine learning algorithms including Logistic Regression, Linear SVM, Random Forest, and a Soft Voting Ensemble model.
+The system was trained and evaluated using Logistic Regression, Linear SVM, Random Forest, and a Soft Voting Ensemble model.
 
-Performance was measured using Accuracy, Precision, Recall, F1-Score, and Confusion Matrix analysis. The experimental results demonstrate that classical machine learning techniques combined with TF-IDF feature extraction can effectively classify mental health-related tweets.
+The models were assessed using Accuracy, Precision, Recall, F1-Score, and Confusion Matrix analysis. Experimental results demonstrated that TF-IDF combined with classical machine learning techniques can effectively classify mental health-related social media posts.
 
-The ensemble approach improved prediction reliability by combining the strengths of multiple classifiers.
+The ensemble approach improved prediction stability by combining predictions from multiple classifiers.
 
 ---
 
@@ -179,12 +193,15 @@ The ensemble approach improved prediction reliability by combining the strengths
 
 ---
 
-## Authors
+## Author
 
-* Javed Akhtar
+Javed Akhtar
 
+MCA Student | Machine Learning & Backend Development Enthusiast
+
+GitHub: [JavedAkhtar0](https://github.com/JavedAkhtar0)
 ---
 
 ## Disclaimer
 
-This project is intended for academic and research purposes only. It should not be used as a clinical diagnostic tool for mental health assessment.
+This project was developed for learning and research purposes to explore the application of Natural Language Processing and Machine Learning in text classification tasks.
