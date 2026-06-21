@@ -159,6 +159,16 @@ to access the Swagger API documentation.
 
 ---
 
+## Results
+
+The proposed system was evaluated using multiple machine learning algorithms including Logistic Regression, Linear SVM, Random Forest, and a Soft Voting Ensemble model.
+
+Performance was measured using Accuracy, Precision, Recall, F1-Score, and Confusion Matrix analysis. The experimental results demonstrate that classical machine learning techniques combined with TF-IDF feature extraction can effectively classify mental health-related tweets.
+
+The ensemble approach improved prediction reliability by combining the strengths of multiple classifiers.
+
+---
+
 ## Future Improvements
 
 * Integration of Transformer-based models (BERT, RoBERTa)
